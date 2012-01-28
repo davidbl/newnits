@@ -7,7 +7,7 @@ module Newnits
       @name = name
       @value = value
       @dimension = dimension
-      @exponent = 1 # @@exponents[dimension]
+      @exponent = @@exponents[dimension]
       self
     end
 
@@ -16,8 +16,6 @@ module Newnits
     end
 
     def compatible_dimension?(other)
-      p self
-      p other
       case self.dimension
       when :length
         (other.unit.dimension == :length && self.exponent == other.exponent) || (other.unit.dimension == :area && self.exponent == 2) || (other.unit.dimension == :volume && self.exponent == 3)
@@ -28,20 +26,6 @@ module Newnits
       when :time
         other.unit.dimension == :time
       end
-      # self.dimension == other.unit.dimension
-    end
-
-    def compatible_exponent?(other)
-      self.exponent == other.exponent
-      true
-    end
-
-    def conversion_value(base)
-      self.value#**(self.exponent)
-    end
-
-    def virtual_exponent(other)
-      other.unit.dimension == self.dimension ? 1 : @@exponents[dimension]
     end
   end
 end

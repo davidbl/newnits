@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["David Blackmon"]
   s.email       = ["davidkblackmon@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Numerical units generator and convertor}
+  s.description = %q{Allows for units creation and converions}
 
   s.rubyforge_project = "newnits"
 

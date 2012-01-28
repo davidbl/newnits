@@ -33,7 +33,7 @@ module Newnits
     end
 
     def self.find(name)
-      @@units.select{ |e| name.to_s.match /^#{e.name}/}.first
+      @@units.select{ |e| name.to_s.match /^#{e.name}/}.first.dup
     end
   end #class Units
 end

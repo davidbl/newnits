@@ -23,21 +23,27 @@ module Newnits
 
 
   class Base
-    attr_accessor :value, :unit, :exponent
+    attr_accessor :value, :unit
     def initialize(value, unit)
       @value = Rational(value, 1) rescue Rational(1,1)
       @unit = unit
-      @exponent = nil
-      @exponent =  Rational(1)*unit.exponent
       self
     end
 
     def in_base_unit
-      (self.unit.value*self.value)
+      if self.unit.dimension == :length && self.unit.name != :meter
+        (self.unit.value*self.value)**exponent
+      else
+        (self.unit.value*self.value)
+      end
+    end
+
+    def exponent
+      @unit.exponent
     end
 
     def to_the(power=1)
-      @exponent = Rational(power)*@unit.exponent
+      @unit.exponent = power
       self
     end
 
@@ -58,7 +64,7 @@ module Newnits
     end
 
     def inspect
-      "<#{self.class.name}##{self.object_id}, @value=#{@value}, @unit=#{@unit.name}, @to_f=#{@value.to_f}, @exponent=#{@exponent}>"
+      "<#{self.class.name}##{self.object_id}, @value=#{@value}, @unit=#{@unit}, @to_f=#{@value.to_f}>"
     end
 
     def to_s
@@ -68,14 +74,8 @@ module Newnits
     def to(unit_name,exponent=1)
       target_unit = Newnits.find_unit(unit_name)
       target_unit.exponent = exponent
-      raise IncompatibleUnitsError, "#{target_unit.dimension} is not compatible with #{self.unit.dimension}" unless target_unit.compatible_dimension?(self)
-      raise IncompatibleExponentError, "Exponents are not compatible #{self.unit.exponent} : #{target_unit.exponent}" unless target_unit.compatible_exponent?(self)
-      
-      p target_unit
-      new_exponent = self.exponent/target_unit.virtual_exponent(self)
-      p new_exponent
-      p target_unit.virtual_exponent(self)
-      converted_value = (self.in_base_unit/(target_unit.value**target_unit.virtual_exponent(self)))**new_exponent
+      raise IncompatibleUnitsError, "#{target_unit.dimension}^#{target_unit.exponent.to_i} is not compatible with #{self.unit.dimension}^#{self.exponent.to_i}" unless target_unit.compatible_dimension?(self)
+      converted_value = (self.in_base_unit/(target_unit.value**target_unit.exponent))
       Base.new(converted_value,target_unit)
     end
   end
