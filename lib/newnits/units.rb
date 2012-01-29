@@ -1,27 +1,21 @@
 module Newnits
   class Units
-    def self.set_up
-      @@units =
-       [
-        [:meter, Rational(1), :length],
-        [:millimeter, Rational('0.001'), :length],
-        [:centimeter, Rational('0.01'), :length],
-        [:decimeter, Rational('0.1'), :length],
-        [:kilometer, Rational(1_000), :length],
-        [:feet, Rational('0.3048'), :length],
-        [:foot, Rational('0.3048'), :length],
-        [:inch, Rational('0.0254'), :length],
-        [:yard, Rational('0.9144'), :length],
-        [:mile, Rational('1609.344'), :length],
-        [:acre, Rational('4_046.856_422_4'), :area],
-        [:hectare, Rational('10_000'), :area],
-        [:second, Rational(1), :time],
-        [:minute, Rational(60), :time],
-        [:hour, Rational(3600), :time],
-        [:day, Rational(86_400), :time],
-        [:liter, Rational('0.001'), :volume],
-        [:gallon, Rational('0.00454609'), :volume],
-       ].map{ |e| Unit.new(*e)}
+    require 'yaml'
+    def self.set_up(file_path = nil)
+      file_path ||= File.join(File.dirname(__FILE__),'units', 'units.yml') 
+      @@units ||= []
+      process_units_file file_path, @@units
+    end
+
+    def self.process_units_file(file_path, container = @@units)
+      raise UnitsFileNotFoundError, "Units File Not Found: #{file_path}" unless File.exists?(file_path)
+      unit_data = YAML::load_file(file_path)
+      unit_data.each_pair  do |dimension, values|
+        dim = dimension.to_sym
+        values.each_pair do |name, value|
+          container << Unit.new(name.to_sym, Rational(value.to_s), dim)
+        end
+      end
     end
 
     def self.units
@@ -29,7 +23,11 @@ module Newnits
     end
 
     def self.add(args)
-      @@units <<  Unit.new(*args)
+      if args.is_a?(String)
+        process_units_file(args)
+      else
+        @@units <<  Unit.new(*args)
+      end
     end
 
     def self.find(name)

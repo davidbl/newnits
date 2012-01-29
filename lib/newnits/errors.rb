@@ -5,6 +5,9 @@ module Newnits
   class UnknownUnitError < StandardError
   end
 
+  class UnitsFileNotFoundError < StandardError
+  end
+
   class IncompatibleExponentError < StandardError
   end
 end

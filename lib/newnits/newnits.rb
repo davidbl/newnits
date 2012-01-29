@@ -69,7 +69,7 @@ module Newnits
     end
 
     def inspect
-      "<#{self.class.name}##{self.object_id}, @value=#{@value}, @unit=#{@unit}, @to_f=#{@value.to_f}>"
+      "<#{self.class.name}##{self.object_id}, @value=#{@value}, @unit=#{@unit}:#{@unit.name}, @to_f=#{@value.to_f}>"
     end
 
     def to_s

@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Newnits::VERSION
   s.authors     = ["David Blackmon"]
   s.email       = ["davidkblackmon@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/davidbl/newnits"
   s.summary     = %q{Numerical units generator and convertor}
   s.description = %q{Allows for units creation and converions}
 
