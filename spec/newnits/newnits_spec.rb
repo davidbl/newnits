@@ -8,8 +8,26 @@ describe 'Newnits' do
     @dummy.extend(Newnits)
   end
 
-  it 'should pass a simple test' do
-    true
+  it 'should know its version' do
+    Newnits.version.should == Newnits::VERSION
+  end
+
+  it 'should have a constructor' do
+    n = Newnits::Base.new(1,:foot)
+    n.should be_a Newnits::Base
+  end
+
+  it 'should extend Fixnum and Float and Bignum only on-demand' do
+    lambda{ 2.feet}.should raise_error
+    Newnits.extend_to_numeric
+    lambda{ 2.feet}.should_not raise_error
+    2.meters.should be_a Newnits::Base
+    1.2.meters.should be_a Newnits::Base
+    4611686018427387903.meters.should be_a Newnits::Base
+  end
+
+  it 'should raise an error is a unit cannot be found' do
+    lambda{ 1.mowgli}.should raise_error Newnits::UnknownUnitError
   end
 
   it 'should give units methods do the extended object' do
@@ -31,10 +49,17 @@ describe 'Newnits' do
   end
 
   it 'should do some conversions' do
+    Newnits::Base.new(1, :kilometer).to(:meters).to_f.should == 1_000
+    Newnits::Base.new(1, :foot).to(:inches).to_f.should == 12
+    Newnits::Base.new(12, :inches).to(:feet).to_f.should == 1
+  end
+
+  it 'should do some conversions using the include methods to Numeric' do
     1.kilometer.to(:meters).to_f.should == 1_000
     1.foot.to(:inches).to_f.should == 12
     12.inches.to(:feet).to_f.should == 1
   end
+
 
 
   it 'should not raise an error when units are compatible' do

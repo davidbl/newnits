@@ -33,7 +33,9 @@ module Newnits
     end
 
     def self.find(name)
-      @@units.select{ |e| name.to_s.match /^#{e.name}/}.first.dup
+      unit = @@units.select{ |e| name.to_s.match /^#{e.name}/}.first
+      raise UnknownUnitError, "Unknown Unit '#{name.to_s}'" unless unit
+      unit.dup
     end
   end #class Units
 end

@@ -4,6 +4,11 @@ module Newnits
   end
   module_function :find_unit
 
+  def extend_to_numeric
+    Numeric.send :include, Newnits
+  end
+  module_function :extend_to_numeric
+
   def method_missing(sym, *args)
     if sym.to_s.match /(square|cubic)?_?([a-z]+)_?(squared|cubed)?/
       if $1
@@ -26,7 +31,7 @@ module Newnits
     attr_accessor :value, :unit
     def initialize(value, unit)
       @value = Rational(value, 1) rescue Rational(1,1)
-      @unit = unit
+      @unit = unit.is_a?(Newnits::Unit) ? unit : Newnits.find_unit(unit)
       self
     end
 

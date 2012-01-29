@@ -1,6 +1,3 @@
-class Fixnum
-  include Newnits
-end
-class Float
+class Numeric
   include Newnits
 end
