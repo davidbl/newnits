@@ -28,10 +28,11 @@ module Newnits
 
 
   class Base
-    attr_accessor :value, :unit
+    attr_accessor :value, :unit, :denominator_unit
     def initialize(value, unit)
       @value = Rational(value, 1) rescue Rational(1,1)
       @unit = unit.is_a?(Newnits::Unit) ? unit : Newnits.find_unit(unit)
+      @denominator_unit = nil
       self
     end
 
@@ -76,12 +77,35 @@ module Newnits
       @value.to_s
     end
 
-    def to(unit_name,exponent=1)
+    def to(unit_name, *args)
+      if args[0].is_a?(Numeric)
+        exponent, per, denom_name, denom_expon = args
+      else
+        per, denom_name, denom_expon = args
+        exponent = 1
+      end
       target_unit = Newnits.find_unit(unit_name)
       target_unit.exponent = exponent
+      if denom_name
+        denom_unit = Newnits.find_unit(denom_name)
+        denom_unit.exponent = denom_expon || 1
+      end
       raise IncompatibleUnitsError, "#{target_unit.dimension}^#{target_unit.exponent.to_i} is not compatible with #{self.unit.dimension}^#{self.exponent.to_i}" unless target_unit.compatible_dimension?(self)
       converted_value = (self.in_base_unit/(target_unit.value**target_unit.exponent))
-      Base.new(converted_value,target_unit)
+      if denom_name
+        converted_demon = Base.new(1,self.denominator_unit).in_base_unit/(denom_unit.value**denom_unit.exponent)
+        converted_value /= converted_demon
+      end
+
+      base = Base.new(converted_value,target_unit)
+      base.denominator_unit = denom_unit if per
+      base
+    end
+
+    def per(unit_name, exponent=1)
+      @denominator_unit = Newnits.find_unit(unit_name)
+      @denominator_unit.exponent = exponent
+      self
     end
   end
 
