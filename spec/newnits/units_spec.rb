@@ -11,6 +11,8 @@ describe 'Units' do
     lambda{ 2.homer }.should_not raise_error
     1.mowgli.to(:meters).to_i.should == 5
     1.homer.to(:seconds).to_i.should == 10
+    2.mowglis.to(:meters).to_i.should == 10
+    2.homers.to(:seconds).to_i.should == 20
   end
 
   it 'should let me add a single unit' do
