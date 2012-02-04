@@ -6,6 +6,7 @@ Install
 =======
 (I haven't published this yet since it is still a work in progress, so
 to install, fork the project, cd in to the directory and
+
 ```ruby
 gem build newnits.gemspec
 rake install
