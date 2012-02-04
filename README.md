@@ -19,10 +19,12 @@ require 'newnits'
 require 'newnits/extenions' # includes the module into Numeric, so we can do
 1.feet.to :inches
  => <Newnits::Base#70242672341580, @value=12/1, @unit=#<Newnits::Unit:0x007fc54b10e560>:inch, @to_f=12.0>
-1.feet.to(:inches).to_f
+1.foot.to(:inches).to_f
  => 12.0
-1.feet.squaures.to(:inches, :squared).to_f
+1.foot.squared.to(:inches, 2).to_f
  => 144.0
+2.feet.to(:inches).to_f
+ => 24.0 
 ```
 
 
