@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["davidkblackmon@gmail.com"]
   s.homepage    = "https://github.com/davidbl/newnits"
   s.summary     = %q{Numerical units generator and convertor}
-  s.description = %q{Allows for units creation and converions}
+  s.description = %q{Allows for units creation and conversions}
 
   s.rubyforge_project = "newnits"
 
