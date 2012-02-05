@@ -17,7 +17,7 @@ describe 'Units' do
 
   it 'should let me add a single unit' do
     lambda{ 8.furlongs}.should raise_error
-    Newnits::Units.add [:furlong, Rational('201.168'), :length]
+    Newnits::Units.add :furlong, Rational('201.168'), :length
     8.furlongs.to(:miles).to_f.should == 1
   end
 end

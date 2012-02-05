@@ -22,9 +22,9 @@ module Newnits
       @@units
     end
 
-    def self.add(args)
-      if args.is_a?(String)
-        process_units_file(args)
+    def self.add(*args)
+      if args.size ==1 && args[0].is_a?(String)
+        process_units_file(*args)
       else
         @@units <<  Unit.new(*args)
       end
