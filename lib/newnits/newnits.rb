@@ -101,6 +101,8 @@ module Newnits
       base.denominator_unit = denom_unit if per
       base
     end
+    alias :convert_to :to
+    alias :convert :to
 
     def per(unit_name, exponent=1)
       @denominator_unit = Newnits.find_unit(unit_name)
