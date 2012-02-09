@@ -111,6 +111,10 @@ describe 'Newnits' do
     end
 
     it 'should convert' do
+      43_560.feet_squared.to(:acres).to_f.should == 1.0
+    end
+
+    it 'should convert' do
       1.hectare.to(:meters,2).to_f.should == 10_000
     end
 

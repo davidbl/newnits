@@ -38,7 +38,7 @@ module Newnits
 
     def in_base_unit
       if self.unit.dimension == :length && self.unit.name != :meter
-        (self.unit.value*self.value)**exponent
+        (self.unit.value**exponent)*self.value
       else
         (self.unit.value*self.value)
       end
@@ -91,10 +91,11 @@ module Newnits
         denom_unit.exponent = denom_expon || 1
       end
       raise IncompatibleUnitsError, "#{target_unit.dimension}^#{target_unit.exponent.to_i} is not compatible with #{self.unit.dimension}^#{self.exponent.to_i}" unless target_unit.compatible_dimension?(self)
+      
       converted_value = (self.in_base_unit/(target_unit.value**target_unit.exponent))
       if denom_name
-        converted_demon = Base.new(1,self.denominator_unit).in_base_unit/(denom_unit.value**denom_unit.exponent)
-        converted_value /= converted_demon
+        converted_denom = Base.new(1,self.denominator_unit).in_base_unit/(denom_unit.value**denom_unit.exponent)
+        converted_value /= converted_denom
       end
 
       base = Base.new(converted_value,target_unit)
