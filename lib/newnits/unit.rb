@@ -1,6 +1,6 @@
 module Newnits
   class Unit
-    @@exponents = {length: Rational(1), area: Rational(2), volume: Rational(3), time: Rational(1)}
+    @@exponents = {length: Rational(1), area: Rational(2), volume: Rational(3), time: Rational(1), mass: Rational(1)}
     attr_reader :name, :value, :dimension
     attr_accessor  :exponent
     def initialize(name, value, dimension)
@@ -25,6 +25,8 @@ module Newnits
         other.unit.dimension == :volume || (other.unit.dimension == :length && other.exponent == 3)
       when :time
         other.unit.dimension == :time
+      when :mass
+        other.unit.dimension == :mass
       end
     end
   end

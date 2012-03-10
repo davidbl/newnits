@@ -54,6 +54,12 @@ describe 'Newnits' do
     Newnits::Base.new(12, :inches).to(:feet).to_f.should == 1
   end
 
+  it 'should convert masses too' do
+    16.ounces.to(:pounds).to_f.should == 1.0
+    1.pound.to(:ounces).to_f.should == 16.0
+    1.kilogram.to(:grams).to_f.should == 1_000
+  end
+
   it 'should do some conversions using the include methods to Numeric' do
     1.kilometer.to(:meters).to_f.should == 1_000
     1.foot.to(:inches).to_f.should == 12
@@ -136,6 +142,7 @@ describe 'Newnits' do
     it 'should convert' do
       2.meters.cubed.to(:liters).to_f.should == 2_000
     end
+
 
     it 'should be able to convert a unit that has a power' do
       1.gallon.to(:liters).to_f.should == 4.54609

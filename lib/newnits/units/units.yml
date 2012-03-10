@@ -12,11 +12,17 @@ length:
 area:
   acre: 4_046.856_422_4
   hectare: 10_000
+volume:
+  liter: 0.001
+  gallon: 0.00454609
 time:
   second: 1
   minute: 60
   hour: 3600
   day: 86_400
-volume:
-  liter: 0.001
-  gallon: 0.00454609
+mass:
+  gram: 1
+  milligram: 0.001
+  kilogram: 1_000
+  pound: 453.592_37
+  ounce: 28.349_523_125
