@@ -22,6 +22,7 @@ module Newnits
       @@units
     end
 
+   #some comment
     def self.add(*args)
       if args.size ==1 && args[0].is_a?(String)
         process_units_file(*args)
