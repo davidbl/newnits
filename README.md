@@ -54,7 +54,8 @@ area = 1.acre.to(:feet, 2).to_f
 ```
 
 You can also create more complex units
---------------------------------------
+---------------------------------------
+
 
 ```ruby
 speed = 180.feet.per(:minute).to(:yards, :per, :second)
