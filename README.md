@@ -64,7 +64,7 @@ speed.to_f
 ```
 
 And you can create your own units
---------------------------------------
+---------------------------------
 
 ```ruby
 Newnits::Units.add :furlong, Rational('201.168'), :length
